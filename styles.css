@@ -1,12 +1,9 @@
 html,
 body {
+  background: black;
   height: 100%;
   margin: 0;
   display: flex;
-  justify-content: center; /* 横方向の中央揃え */
-  align-items: center; /* 縦方向の中央揃え */
-}
-
-canvas {
-  border: 1px solid black; /* デバッグ用に境界線を追加（必要に応じて削除） */
+  justify-content: center;
+  align-items: center;
 }

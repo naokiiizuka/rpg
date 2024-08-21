@@ -1,3 +1,5 @@
+// game.js
+
 import { drawMap } from "./map.js";
 import { drawPlayer, setPlayerStartPosition, movePlayer } from "./player.js";
 
@@ -11,16 +13,24 @@ const mapHeight = 15;
 canvas.width = mapWidth * tileSize;
 canvas.height = mapHeight * tileSize;
 
+// タイル画像をロード
+const tileImage = new Image();
+tileImage.src = "images/tiles.png"; // タイル画像のパス
+
+tileImage.onload = function () {
+  setPlayerStartPosition();
+  draw(); // 画像がロードされた後に描画
+};
+
+// 描画関数
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawMap(ctx, tileSize);
   drawPlayer(ctx, tileSize);
 }
 
+// キーイベントリスナー
 document.addEventListener("keydown", (event) => {
   movePlayer(event);
   draw();
 });
-
-setPlayerStartPosition();
-draw();
