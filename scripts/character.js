@@ -1,5 +1,5 @@
 import { map } from "./map.js";
-import { playerImage } from "./images.js";
+import { characterImage } from "./images.js";
 
 const player = {
   x: 7,
@@ -8,15 +8,21 @@ const player = {
   height: 32,
 };
 
+// Set the player's position during game initialization
+export function initializePlayer() {
+  player.x = 7; // Or the appropriate starting position
+  player.y = 7; // Or the appropriate starting position
+}
+
 export function drawPlayer(ctx, tileSize) {
   // Draw player image
   const playerTileX = 0;
   const playerTileY = 0;
-  ctx.drawImage(playerImage, playerTileX * tileSize, playerTileY * tileSize, tileSize, tileSize, player.x * tileSize, player.y * tileSize, tileSize, tileSize);
+  ctx.drawImage(characterImage, playerTileX * tileSize, playerTileY * tileSize, tileSize, tileSize, player.x * tileSize, player.y * tileSize, tileSize, tileSize);
 }
 
 // Manage types of non-movable map tiles in an array
-const blockedTiles = [0, 1, 2, 3];
+const blockedTiles = [0, 1, 2];
 
 export function movePlayer(event) {
   let newX = player.x;

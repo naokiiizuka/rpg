@@ -1,5 +1,5 @@
 import { drawMap } from "./map.js";
-import { drawPlayer, movePlayer } from "./player.js";
+import { drawPlayer, initializePlayer, movePlayer } from "./character.js";
 import { tileImage } from "./images.js";
 
 const canvas = document.getElementById("gameCanvas");
@@ -13,6 +13,7 @@ canvas.width = mapWidth * tileSize;
 canvas.height = mapHeight * tileSize;
 
 tileImage.onload = function () {
+  initializePlayer();
   draw();
 };
 
