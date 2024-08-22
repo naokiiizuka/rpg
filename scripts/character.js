@@ -1,32 +1,32 @@
 import { map } from "./map.js";
 import { characterImage } from "./images.js";
 
-const player = {
+const character = {
   x: 7,
   y: 7,
   width: 32,
   height: 32,
 };
 
-// Set the player's position during game initialization
-export function initializePlayer() {
-  player.x = 7; // Or the appropriate starting position
-  player.y = 7; // Or the appropriate starting position
+// Set the character's position during game initialization
+export function initializeCharacter() {
+  character.x = 7; // Or the appropriate starting position
+  character.y = 7; // Or the appropriate starting position
 }
 
 export function drawPlayer(ctx, tileSize) {
-  // Draw player image
-  const playerTileX = 0;
-  const playerTileY = 0;
-  ctx.drawImage(characterImage, playerTileX * tileSize, playerTileY * tileSize, tileSize, tileSize, player.x * tileSize, player.y * tileSize, tileSize, tileSize);
+  // Draw character image
+  const characterTileX = 0;
+  const characterTileY = 0;
+  ctx.drawImage(characterImage, characterTileX * tileSize, characterTileY * tileSize, tileSize, tileSize, character.x * tileSize, character.y * tileSize, tileSize, tileSize);
 }
 
 // Manage types of non-movable map tiles in an array
 const blockedTiles = [0, 1, 2];
 
 export function movePlayer(event) {
-  let newX = player.x;
-  let newY = player.y;
+  let newX = character.x;
+  let newY = character.y;
 
   switch (event.key) {
     case "ArrowUp":
@@ -45,7 +45,7 @@ export function movePlayer(event) {
 
   // Check if the new coordinates are within the map bounds and if the destination is not in the blockedTiles
   if (newX >= 0 && newX < map[0].length && newY >= 0 && newY < map.length && !blockedTiles.includes(map[newY][newX])) {
-    player.x = newX;
-    player.y = newY;
+    character.x = newX;
+    character.y = newY;
   }
 }
