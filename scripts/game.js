@@ -1,5 +1,3 @@
-// game.js
-
 import { drawMap } from "./map.js";
 import { drawPlayer, setPlayerStartPosition, movePlayer } from "./player.js";
 

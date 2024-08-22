@@ -1,5 +1,4 @@
-const tileImage = new Image();
-tileImage.src = "assets/images/tiles.png"; // タイル画像のパス
+import { tileImage } from "./tiles.js";
 
 export const map = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -19,17 +18,15 @@ export const map = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-// タイル画像のサイズを指定
 const tileSize = 32;
 
-// タイル画像を描画する関数
 export function drawMap(ctx, tileSize) {
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[y].length; x++) {
       const tileType = map[y][x]; // マップの値をタイルタイプとして使用
 
       // タイルの位置（X座標）を設定
-      const tileX = tileType % 4; // タイルシートのX位置（例えば、10種類のタイルが1行に並んでいる場合）
+      const tileX = tileType % 4; // タイルシートのX位置（例えば、4種類のタイルが1行に並んでいる場合）
       const tileY = Math.floor(tileType / 4); // タイルシートのY位置
 
       // タイル画像の描画

@@ -1,4 +1,5 @@
 import { map } from "./map.js";
+import { tileImage } from "./tiles.js";
 
 const player = {
   x: 7,
@@ -6,9 +7,6 @@ const player = {
   width: 32,
   height: 32,
 };
-
-const tileImage = new Image();
-tileImage.src = "assets/images/tiles.png"; // プレイヤーの画像も含むタイル画像
 
 export function drawPlayer(ctx, tileSize) {
   // プレイヤー画像を描画
