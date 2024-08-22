@@ -1,5 +1,6 @@
 import { drawMap } from "./map.js";
-import { drawPlayer, setPlayerStartPosition, movePlayer } from "./player.js";
+import { drawPlayer, movePlayer } from "./player.js";
+import { tileImage } from "./tiles.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -11,23 +12,18 @@ const mapHeight = 15;
 canvas.width = mapWidth * tileSize;
 canvas.height = mapHeight * tileSize;
 
-// タイル画像をロード
-const tileImage = new Image();
-tileImage.src = "assets/images/tiles.png"; // タイル画像のパス
-
 tileImage.onload = function () {
-  setPlayerStartPosition();
-  draw(); // 画像がロードされた後に描画
+  draw();
 };
 
-// 描画関数
+// draw function
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawMap(ctx, tileSize);
   drawPlayer(ctx, tileSize);
 }
 
-// キーイベントリスナー
+// key event listener
 document.addEventListener("keydown", (event) => {
   movePlayer(event);
   draw();

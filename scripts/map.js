@@ -23,23 +23,23 @@ const tileSize = 32;
 export function drawMap(ctx, tileSize) {
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[y].length; x++) {
-      const tileType = map[y][x]; // マップの値をタイルタイプとして使用
+      const tileType = map[y][x]; // Use map values as tile types
 
-      // タイルの位置（X座標）を設定
-      const tileX = tileType % 4; // タイルシートのX位置（例えば、4種類のタイルが1行に並んでいる場合）
-      const tileY = Math.floor(tileType / 4); // タイルシートのY位置
+      // Set tile position (X coordinate)
+      const tileX = tileType % 4; // X position on the tile sheet (e.g., when 4 types of tiles are arranged in a row)s
+      const tileY = Math.floor(tileType / 4); // Y position on the tile sheet
 
-      // タイル画像の描画
+      // Draw the tile image
       ctx.drawImage(
-        tileImage, // タイル画像オブジェクト
-        tileX * tileSize, // タイルシート内のX座標
-        tileY * tileSize, // タイルシート内のY座標
-        tileSize, // タイルの幅
-        tileSize, // タイルの高さ
-        x * tileSize, // キャンバス上のX座標
-        y * tileSize, // キャンバス上のY座標
-        tileSize, // キャンバス上のタイル幅
-        tileSize // キャンバス上のタイル高さ
+        tileImage, // Tile image object
+        tileX * tileSize, // X coordinate on the tile sheet
+        tileY * tileSize, // Y coordinate on the tile sheet
+        tileSize, // Tile width
+        tileSize, // Tile height
+        x * tileSize, // X coordinate on the canvas
+        y * tileSize, // Y coordinate on the canvas
+        tileSize, // Tile width on the canvas
+        tileSize // Tile height on the canvas
       );
     }
   }
