@@ -15,7 +15,7 @@ canvas.height = mapHeight * tileSize;
 
 // タイル画像をロード
 const tileImage = new Image();
-tileImage.src = "images/tiles.png"; // タイル画像のパス
+tileImage.src = "assets/images/tiles.png"; // タイル画像のパス
 
 tileImage.onload = function () {
   setPlayerStartPosition();

@@ -8,7 +8,7 @@ const player = {
 };
 
 const tileImage = new Image();
-tileImage.src = "images/tiles.png"; // プレイヤーの画像も含むタイル画像
+tileImage.src = "assets/images/tiles.png"; // プレイヤーの画像も含むタイル画像
 
 export function drawPlayer(ctx, tileSize) {
   // プレイヤー画像を描画
