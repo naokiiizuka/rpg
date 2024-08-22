@@ -6,17 +6,14 @@ const character = {
   y: 7,
   width: 32,
   height: 32,
+  frame: 0,
+  frameInterval: 500,
 };
 
-// Set the character's position during game initialization
-export function initializeCharacter() {
-  character.x = 7; // Or the appropriate starting position
-  character.y = 7; // Or the appropriate starting position
-}
-
+// Draw character image
 export function drawCharacter(ctx, tileSize) {
-  // Draw character image
-  const characterTileX = 0;
+  character.frame = 1 - character.frame;
+  const characterTileX = character.frame;
   const characterTileY = 0;
   ctx.drawImage(characterImage, characterTileX * tileSize, characterTileY * tileSize, tileSize, tileSize, character.x * tileSize, character.y * tileSize, tileSize, tileSize);
 }

@@ -1,5 +1,5 @@
 import { drawMap } from "./map.js";
-import { drawCharacter, initializeCharacter, moveCharacter } from "./character.js";
+import { drawCharacter, moveCharacter } from "./character.js";
 import { drawItems } from "./items.js";
 import { tileImage } from "./images.js";
 
@@ -14,8 +14,9 @@ canvas.width = mapWidth * tileSize;
 canvas.height = mapHeight * tileSize;
 
 tileImage.onload = function () {
-  initializeCharacter();
-  draw();
+  setInterval(() => {
+    draw();
+  }, 500);
 };
 
 // draw function
