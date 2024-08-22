@@ -1,6 +1,6 @@
 import { drawMap } from "./map.js";
 import { drawPlayer, movePlayer } from "./player.js";
-import { tileImage } from "./tiles.js";
+import { tileImage } from "./images.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");

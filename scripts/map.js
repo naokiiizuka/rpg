@@ -1,4 +1,4 @@
-import { tileImage } from "./tiles.js";
+import { tileImage } from "./images.js";
 
 export const map = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

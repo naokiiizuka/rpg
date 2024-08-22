@@ -1,5 +1,5 @@
 import { map } from "./map.js";
-import { tileImage } from "./tiles.js";
+import { playerImage } from "./images.js";
 
 const player = {
   x: 7,
@@ -11,8 +11,8 @@ const player = {
 export function drawPlayer(ctx, tileSize) {
   // Draw player image
   const playerTileX = 0;
-  const playerTileY = 2;
-  ctx.drawImage(tileImage, playerTileX * tileSize, playerTileY * tileSize, tileSize, tileSize, player.x * tileSize, player.y * tileSize, tileSize, tileSize);
+  const playerTileY = 0;
+  ctx.drawImage(playerImage, playerTileX * tileSize, playerTileY * tileSize, tileSize, tileSize, player.x * tileSize, player.y * tileSize, tileSize, tileSize);
 }
 
 // Manage types of non-movable map tiles in an array
