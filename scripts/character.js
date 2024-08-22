@@ -1,5 +1,6 @@
 import { map } from "./map.js";
 import { characterImage } from "./images.js";
+import { npcs } from "./npc.js";
 
 const character = {
   x: 7,
@@ -7,7 +8,6 @@ const character = {
   width: 32,
   height: 32,
   frame: 0,
-  frameInterval: 500,
 };
 
 // Draw character image
@@ -20,6 +20,11 @@ export function drawCharacter(ctx, tileSize) {
 
 // Manage types of non-movable map tiles in an array
 const blockedTiles = [0, 1, 2];
+
+// Function to prevent the player from entering the NPC's position
+function isBlockedByNPC(newX, newY) {
+  return npcs.some((npc) => npc.x === newX && npc.y === newY);
+}
 
 export function moveCharacter(event) {
   let newX = character.x;
@@ -40,8 +45,15 @@ export function moveCharacter(event) {
       break;
   }
 
-  // Check if the new coordinates are within the map bounds and if the destination is not in the blockedTiles
-  if (newX >= 0 && newX < map[0].length && newY >= 0 && newY < map.length && !blockedTiles.includes(map[newY][newX])) {
+  // Check: Within map bounds and not in blockedTiles or NPC positions
+  if (
+    newX >= 0 &&
+    newX < map[0].length &&
+    newY >= 0 &&
+    newY < map.length &&
+    !blockedTiles.includes(map[newY][newX]) && // The destination is not a blocked tile
+    !isBlockedByNPC(newX, newY) // The destination is not an NPC
+  ) {
     character.x = newX;
     character.y = newY;
   }
