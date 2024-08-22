@@ -14,7 +14,7 @@ export function initializeCharacter() {
   character.y = 7; // Or the appropriate starting position
 }
 
-export function drawPlayer(ctx, tileSize) {
+export function drawCharacter(ctx, tileSize) {
   // Draw character image
   const characterTileX = 0;
   const characterTileY = 0;
@@ -24,7 +24,7 @@ export function drawPlayer(ctx, tileSize) {
 // Manage types of non-movable map tiles in an array
 const blockedTiles = [0, 1, 2];
 
-export function movePlayer(event) {
+export function moveCharacter(event) {
   let newX = character.x;
   let newY = character.y;
 

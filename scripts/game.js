@@ -1,5 +1,5 @@
 import { drawMap } from "./map.js";
-import { drawPlayer, initializeCharacter, movePlayer } from "./character.js";
+import { drawCharacter, initializeCharacter, moveCharacter } from "./character.js";
 import { drawItems } from "./items.js";
 import { tileImage } from "./images.js";
 
@@ -23,11 +23,11 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawMap(ctx, tileSize);
   drawItems(ctx, tileSize);
-  drawPlayer(ctx, tileSize);
+  drawCharacter(ctx, tileSize);
 }
 
 // key event listener
 document.addEventListener("keydown", (event) => {
-  movePlayer(event);
+  moveCharacter(event);
   draw();
 });
