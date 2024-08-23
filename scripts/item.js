@@ -13,6 +13,7 @@ export function drawItems(ctx, tileSize, offsetX, offsetY) {
   items.forEach((item) => {
     let itemTileX, itemTileY;
 
+    // Determine the position of the item image on the sprite sheet
     switch (item.type) {
       case "chest":
         itemTileX = 0;
@@ -28,9 +29,11 @@ export function drawItems(ctx, tileSize, offsetX, offsetY) {
         break;
     }
 
+    // Calculate the canvas position for the item
     const canvasX = (item.x - offsetX) * tileSize;
     const canvasY = (item.y - offsetY) * tileSize;
 
+    // Draw the item at the correct position
     ctx.drawImage(itemImage, itemTileX * tileSize, itemTileY * tileSize, tileSize, tileSize, canvasX, canvasY, tileSize, tileSize);
   });
 }
@@ -39,3 +42,4 @@ export function drawItems(ctx, tileSize, offsetX, offsetY) {
 export function isBlockedItem(newX, newY) {
   return items.some((item) => item.x === newX && item.y === newY && item.blocked);
 }
+``;

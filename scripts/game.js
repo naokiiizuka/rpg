@@ -9,83 +9,77 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 const tileSize = 32;
-const mapWidth = 15;
-const mapHeight = 15;
+const visibleWidth = 15;
+const visibleHeight = 15;
 
-canvas.width = mapWidth * tileSize;
-canvas.height = mapHeight * tileSize;
+canvas.width = visibleWidth * tileSize;
+canvas.height = visibleHeight * tileSize;
 
-tileImage.onload = function () {
-  gameLoop();
-};
+let mapOffsetX = 8;
+let mapOffsetY = 8;
 
-let mapOffsetX = 8; // Offset for the 27x27 map to display the central 15x15
-let mapOffsetY = 8; // Same as above
-const playerOffsetX = 8;
-const playerOffsetY = 8;
+tileImage.onload = () => gameLoop();
 
 function gameLoop() {
-  draw();
+  drawScene();
   requestAnimationFrame(gameLoop);
 }
 
-function draw() {
+function drawScene() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawMap(ctx, tileSize, mapOffsetX, mapOffsetY);
   drawItems(ctx, tileSize, mapOffsetX, mapOffsetY);
   drawNPCs(ctx, tileSize, mapOffsetX, mapOffsetY);
-  drawPlayer(ctx, tileSize, playerOffsetX, playerOffsetY);
+  drawPlayer(ctx, tileSize, 8, 8);
 }
 
-// Function to log map information surrounding the player
-function logSurroundingMap() {
-  const surroundingTiles = [
-    { x: player.x - playerOffsetX + mapOffsetX, y: player.y - playerOffsetY + mapOffsetY }, // Status
-    { x: player.x - playerOffsetX + mapOffsetX, y: player.y - playerOffsetY + mapOffsetY - 1 }, // Top
-    { x: player.x - playerOffsetX + mapOffsetX + 1, y: player.y - playerOffsetY + mapOffsetY }, // Right
-    { x: player.x - playerOffsetX + mapOffsetX, y: player.y - playerOffsetY + mapOffsetY + 1 }, // Bottom
-    { x: player.x - playerOffsetX + mapOffsetX - 1, y: player.y - playerOffsetY + mapOffsetY }, // Left
-  ];
+document.addEventListener("keydown", handleKeyPress);
 
-  console.log("Surrounding map tiles:");
-  surroundingTiles.forEach(({ x, y }) => {
-    if (x >= 0 && x < map[0].length && y >= 0 && y < map.length) {
-      console.log(`Tile at (${x}, ${y}): ${map[y][x]}`);
-    } else {
-      console.log(`Tile at (${x}, ${y}): Out of bounds`);
-    }
-  });
-}
-
-// Call logSurroundingMap function on a key event for testing purposes
-document.addEventListener("keydown", (event) => {
+function handleKeyPress(event) {
+  if (event.key === "l") logSurroundingTiles();
   moveMap(event);
-  if (event.key === "l") {
-    // Press 'l' to log surrounding map info
-    logSurroundingMap();
-  }
-});
+}
 
-// Function to move the map instead of the player
 function moveMap(event) {
-  let newX = player.x - playerOffsetX + mapOffsetX;
-  let newY = player.y - playerOffsetY + mapOffsetY;
+  const { x: playerX, y: playerY } = player;
+  const offsetX = playerX - 8 + mapOffsetX;
+  const offsetY = playerY - 8 + mapOffsetY;
+
   switch (event.key) {
     case "ArrowUp":
-      // console.log(map[newY - 1][newX]);
-      if (mapOffsetY > 0 && !blockedTiles.includes(map[newY - 1][newX]) && !isBlockedNPC(newX, newY - 1) && !isBlockedItem(newX, newY - 1)) mapOffsetY--;
+      if (mapOffsetY > 0 && isValidMove(offsetX, offsetY - 1)) mapOffsetY--;
       break;
     case "ArrowRight":
-      // console.log(map[newY][newX + 1]);
-      if (mapOffsetX < 16 && !blockedTiles.includes(map[newY][newX + 1]) && !isBlockedNPC(newX + 1, newY) && !isBlockedItem(newX + 1, newY)) mapOffsetX++;
+      if (mapOffsetX < 16 && isValidMove(offsetX + 1, offsetY)) mapOffsetX++;
       break;
     case "ArrowDown":
-      // console.log(map[newY + 1][newX]);
-      if (mapOffsetY < 16 && !blockedTiles.includes(map[newY + 1][newX]) && !isBlockedNPC(newX, newY + 1) && !isBlockedItem(newX, newY + 1)) mapOffsetY++;
+      if (mapOffsetY < 16 && isValidMove(offsetX, offsetY + 1)) mapOffsetY++;
       break;
     case "ArrowLeft":
-      // console.log(map[newY][newX - 1]);
-      if (mapOffsetX > 0 && !blockedTiles.includes(map[newY][newX - 1]) && !isBlockedNPC(newX - 1, newY) && !isBlockedItem(newX - 1, newY)) mapOffsetX--;
+      if (mapOffsetX > 0 && isValidMove(offsetX - 1, offsetY)) mapOffsetX--;
       break;
   }
+}
+
+function isValidMove(x, y) {
+  return !blockedTiles.includes(map[y][x]) && !isBlockedNPC(x, y) && !isBlockedItem(x, y);
+}
+
+function logSurroundingTiles() {
+  const { x: playerX, y: playerY } = player;
+  const tilePositions = [
+    { x: playerX + mapOffsetX - 8, y: playerY + mapOffsetY - 8 },
+    { x: playerX + mapOffsetX - 8, y: playerY + mapOffsetY - 9 },
+    { x: playerX + mapOffsetX - 7, y: playerY + mapOffsetY - 8 },
+    { x: playerX + mapOffsetX - 8, y: playerY + mapOffsetY - 7 },
+    { x: playerX + mapOffsetX - 9, y: playerY + mapOffsetY - 8 },
+  ];
+
+  tilePositions.forEach(({ x, y }) => {
+    if (x >= 0 && x < map[0].length && y >= 0 && y < map.length) {
+      console.log(`Tile (${x}, ${y}): ${map[y][x]}`);
+    } else {
+      console.log(`Tile (${x}, ${y}): Out of bounds`);
+    }
+  });
 }

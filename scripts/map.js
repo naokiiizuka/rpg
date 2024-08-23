@@ -39,26 +39,28 @@ const tileSize = 32;
 // Manage types of non-movable map tiles in an array
 export const blockedTiles = [0, 1, 2];
 
+// Draw the map on the canvas
 export function drawMap(ctx, tileSize, offsetX, offsetY) {
   for (let y = offsetY; y < offsetY + 15; y++) {
     for (let x = offsetX; x < offsetX + 15; x++) {
       const tileType = map[y][x];
 
-      // Set tile position (X coordinate)
-      const tileX = tileType % 8; // X position on the tile sheet (e.g., when 8 types of tiles are arranged in a row)s
-      const tileY = Math.floor(tileType / 8); // Y position on the tile sheet
+      // Calculate the tile's X coordinate on the tile sheet
+      const tileX = tileType % 8;
+      // Calculate the tile's Y coordinate on the tile sheet
+      const tileY = Math.floor(tileType / 8);
 
-      // Draw the tile image
+      // Draw the tile at the correct position on the canvas
       ctx.drawImage(
         tileImage, // Tile image object
         tileX * tileSize, // X coordinate on the tile sheet
         tileY * tileSize, // Y coordinate on the tile sheet
-        tileSize, // Tile width
-        tileSize, // Tile height
+        tileSize, // Width of the tile
+        tileSize, // Height of the tile
         (x - offsetX) * tileSize, // X coordinate on the canvas
         (y - offsetY) * tileSize, // Y coordinate on the canvas
-        tileSize, // Tile width on the canvas
-        tileSize // Tile height on the canvas
+        tileSize, // Width of the tile on the canvas
+        tileSize // Height of the tile on the canvas
       );
     }
   }
