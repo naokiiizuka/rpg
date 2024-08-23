@@ -1,5 +1,5 @@
 import { drawMap } from "./map.js";
-import { drawCharacter, moveCharacter } from "./character.js";
+import { drawPlayer, movePlayer } from "./player.js";
 import { drawNPCs } from "./npc.js";
 import { drawItems } from "./items.js";
 import { tileImage } from "./images.js";
@@ -15,10 +15,13 @@ canvas.width = mapWidth * tileSize;
 canvas.height = mapHeight * tileSize;
 
 tileImage.onload = function () {
-  setInterval(() => {
-    draw();
-  }, 300);
+  gameLoop();
 };
+
+function gameLoop() {
+  draw();
+  requestAnimationFrame(gameLoop);
+}
 
 // draw function
 function draw() {
@@ -26,10 +29,10 @@ function draw() {
   drawMap(ctx, tileSize);
   drawItems(ctx, tileSize);
   drawNPCs(ctx, tileSize);
-  drawCharacter(ctx, tileSize);
+  drawPlayer(ctx, tileSize);
 }
 
 // key event listener
 document.addEventListener("keydown", (event) => {
-  moveCharacter(event);
+  movePlayer(event);
 });

@@ -7,5 +7,5 @@ itemImage.src = "assets/images/items.png";
 export const npcImage = new Image();
 npcImage.src = "assets/images/npcs.png";
 
-export const characterImage = new Image();
-characterImage.src = "assets/images/characters.png";
+export const playerImage = new Image();
+playerImage.src = "assets/images/players.png";
