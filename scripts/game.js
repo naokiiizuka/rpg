@@ -18,8 +18,8 @@ tileImage.onload = function () {
   gameLoop();
 };
 
-let mapOffsetX = 4; // Offset for the 23x23 map to display the central 15x15
-let mapOffsetY = 4; // Same as above
+let mapOffsetX = 8; // Offset for the 27x27 map to display the central 15x15
+let mapOffsetY = 8; // Same as above
 
 function gameLoop() {
   draw();
@@ -31,7 +31,7 @@ function draw() {
   drawMap(ctx, tileSize, mapOffsetX, mapOffsetY);
   drawItems(ctx, tileSize, mapOffsetX, mapOffsetY);
   drawNPCs(ctx, tileSize, mapOffsetX, mapOffsetY);
-  drawPlayer(ctx, tileSize);
+  drawPlayer(ctx, tileSize); // Draw player without offsets
 }
 
 document.addEventListener("keydown", (event) => {
@@ -42,16 +42,16 @@ document.addEventListener("keydown", (event) => {
 function moveMap(event) {
   switch (event.key) {
     case "ArrowUp":
-      if (mapOffsetY > 0) mapOffsetY--; // Prevent moving out of bounds
+      if (mapOffsetY > 0) mapOffsetY--;
       break;
     case "ArrowDown":
-      if (mapOffsetY < 8) mapOffsetY++; // Prevent moving out of bounds
+      if (mapOffsetY < 16) mapOffsetY++;
       break;
     case "ArrowLeft":
-      if (mapOffsetX > 0) mapOffsetX--; // Prevent moving out of bounds
+      if (mapOffsetX > 0) mapOffsetX--;
       break;
     case "ArrowRight":
-      if (mapOffsetX < 8) mapOffsetX++; // Prevent moving out of bounds
+      if (mapOffsetX < 16) mapOffsetX++;
       break;
   }
 }

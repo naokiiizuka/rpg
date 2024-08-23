@@ -1,9 +1,9 @@
 import { npcImage } from "./image.js";
 
 export const npcs = [
-  { x: 11, y: 10, frame: 2, anime: 0, frame: 2, frameCount: 2, frameInterval: 300, lastFrameTime: 0 },
-  { x: 11, y: 13, frame: 0, anime: 1, frame: 0, frameCount: 2, frameInterval: 300, lastFrameTime: 0 },
-  { x: 13, y: 13, frame: 0, anime: 1, frame: 0, frameCount: 2, frameInterval: 300, lastFrameTime: 0 },
+  { x: 15, y: 14, frame: 2, anime: 0, frame: 2, frameCount: 2, frameInterval: 300, lastFrameTime: 0 },
+  { x: 15, y: 17, frame: 0, anime: 1, frame: 0, frameCount: 2, frameInterval: 300, lastFrameTime: 0 },
+  { x: 17, y: 17, frame: 0, anime: 1, frame: 0, frameCount: 2, frameInterval: 300, lastFrameTime: 0 },
 ];
 
 export function drawNPCs(ctx, tileSize, offsetX, offsetY) {

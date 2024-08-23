@@ -1,11 +1,11 @@
 import { itemImage } from "./image.js";
 
 const items = [
-  { type: "chest", x: 14, y: 8, blocked: false },
-  { type: "chest", x: 12, y: 11, blocked: false },
-  { type: "chest", x: 13, y: 11, blocked: false },
-  { type: "door", x: 12, y: 14, blocked: true },
-  { type: "stairs", x: 16, y: 15, blocked: false },
+  { type: "chest", x: 18, y: 12, blocked: false },
+  { type: "chest", x: 16, y: 15, blocked: false },
+  { type: "chest", x: 17, y: 15, blocked: false },
+  { type: "door", x: 16, y: 18, blocked: true },
+  { type: "stairs", x: 20, y: 19, blocked: false },
 ];
 
 // Draw each item on the map
