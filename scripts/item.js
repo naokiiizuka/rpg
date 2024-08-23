@@ -36,6 +36,6 @@ export function drawItems(ctx, tileSize, offsetX, offsetY) {
 }
 
 // Function to check if an item is blocking movement
-export function isBlockedItem(x, y) {
-  return items.some((item) => item.x === x && item.y === y && item.blocked);
+export function isBlockedItem(newX, newY) {
+  return items.some((item) => item.x === newX && item.y === newY && item.blocked);
 }

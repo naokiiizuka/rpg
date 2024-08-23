@@ -1,8 +1,8 @@
 import { playerImage } from "./image.js";
 
-const player = {
-  x: 7, // Player stays in the center of the map
-  y: 7,
+export const player = {
+  x: 15, // Player stays in the center of the map
+  y: 15,
   width: 32,
   height: 32,
   frame: 0,
@@ -12,7 +12,7 @@ const player = {
 };
 
 // Function to draw the player at the center
-export function drawPlayer(ctx, tileSize) {
+export function drawPlayer(ctx, tileSize, offsetX, offsetY) {
   const now = Date.now();
   if (now - player.lastFrameTime > player.frameInterval) {
     player.frame = (player.frame + 1) % player.frameCount;
@@ -23,8 +23,8 @@ export function drawPlayer(ctx, tileSize) {
   const playerTileY = 0;
 
   // The player remains in the center of the canvas
-  const canvasX = player.x * tileSize;
-  const canvasY = player.y * tileSize;
+  const canvasX = (player.x - offsetX) * tileSize;
+  const canvasY = (player.y - offsetY) * tileSize;
 
   ctx.drawImage(playerImage, playerTileX * tileSize, playerTileY * tileSize, tileSize, tileSize, canvasX, canvasY, tileSize, tileSize);
 }

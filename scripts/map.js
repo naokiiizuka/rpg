@@ -36,6 +36,9 @@ export const map = [
 
 const tileSize = 32;
 
+// Manage types of non-movable map tiles in an array
+export const blockedTiles = [0, 1, 2];
+
 export function drawMap(ctx, tileSize, offsetX, offsetY) {
   for (let y = offsetY; y < offsetY + 15; y++) {
     for (let x = offsetX; x < offsetX + 15; x++) {

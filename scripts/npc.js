@@ -24,3 +24,7 @@ export function drawNPCs(ctx, tileSize, offsetX, offsetY) {
     ctx.drawImage(npcImage, npcTileX * tileSize, npcTileY * tileSize, tileSize, tileSize, canvasX, canvasY, tileSize, tileSize);
   });
 }
+
+export function isBlockedNPC(newX, newY) {
+  return npcs.some((npc) => npc.x === newX && npc.y === newY);
+}
