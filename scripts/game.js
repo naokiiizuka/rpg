@@ -18,6 +18,9 @@ tileImage.onload = function () {
   gameLoop();
 };
 
+let mapOffsetX = 4; // 23x23のマップの中央15x15を表示するためのオフセット
+let mapOffsetY = 4; // 同上
+
 function gameLoop() {
   draw();
   requestAnimationFrame(gameLoop);
@@ -25,10 +28,10 @@ function gameLoop() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawMap(ctx, tileSize);
-  drawItems(ctx, tileSize);
-  drawNPCs(ctx, tileSize);
-  drawPlayer(ctx, tileSize);
+  drawMap(ctx, tileSize, mapOffsetX, mapOffsetY);
+  drawItems(ctx, tileSize, mapOffsetX, mapOffsetY);
+  drawNPCs(ctx, tileSize, mapOffsetX, mapOffsetY);
+  drawPlayer(ctx, tileSize, mapOffsetX, mapOffsetY);
 }
 
 document.addEventListener("keydown", (event) => {
