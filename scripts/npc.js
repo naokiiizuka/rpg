@@ -1,4 +1,4 @@
-import { npcImage } from "./images.js";
+import { npcImage } from "./image.js";
 
 export const npcs = [
   { x: 7, y: 6, frame: 2, anime: 0, frame: 2, frameCount: 2, frameInterval: 300, lastFrameTime: 0 },

@@ -1,6 +1,7 @@
 import { map } from "./map.js";
-import { playerImage } from "./images.js";
+import { playerImage } from "./image.js";
 import { npcs } from "./npc.js";
+import { isBlockedItem } from "./item.js";
 
 const player = {
   x: 7,
@@ -60,7 +61,8 @@ export function movePlayer(event) {
     newY >= 0 &&
     newY < map.length &&
     !blockedTiles.includes(map[newY][newX]) && // The destination is not a blocked tile
-    !isBlockedByNPC(newX, newY) // The destination is not an NPC
+    !isBlockedByNPC(newX, newY) && // The destination is not an NPC &&
+    !isBlockedItem(newX, newY) // The destination is not a blocked item
   ) {
     player.x = newX;
     player.y = newY;
