@@ -33,11 +33,29 @@ function drawScene() {
   drawPlayer(ctx, tileSize, 8, 8);
 }
 
+let moveInterval; // Timer to handle keypress intervals
+let moveDelay = 200; // Delay between moves in milliseconds
+let lastKeyPressed = null; // Track the last key pressed for consistent movement
+
 document.addEventListener("keydown", handleKeyPress);
+document.addEventListener("keyup", stopMovement);
 
 function handleKeyPress(event) {
-  if (event.key === "l") logSurroundingTiles();
-  moveMap(event);
+  if (lastKeyPressed === event.key) return; // Prevent repeating the same key
+  lastKeyPressed = event.key;
+
+  if (moveInterval) clearInterval(moveInterval); // Clear any existing interval
+  moveMap(event); // First movement on keydown
+
+  // Set up a continuous movement with the specified delay
+  moveInterval = setInterval(() => moveMap(event), moveDelay);
+}
+
+function stopMovement(event) {
+  if (event.key === lastKeyPressed) {
+    clearInterval(moveInterval); // Stop movement when key is released
+    lastKeyPressed = null; // Reset the key tracking
+  }
 }
 
 function moveMap(event) {
