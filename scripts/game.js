@@ -4,6 +4,7 @@ import { drawNPCs, isBlockedNPC } from "./npc.js";
 import { drawItems, isBlockedItem } from "./item.js";
 import { map } from "./map.js";
 import { tileImage } from "./image.js";
+import { playBumpSound } from "./sound.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -48,31 +49,45 @@ function handleKeyPress(event) {
   const offsetX = playerX - 8 + mapOffsetX / tileSize;
   const offsetY = playerY - 8 + mapOffsetY / tileSize;
 
+  let collision = false;
+
   switch (event.key) {
     case "ArrowUp":
       if (isValidMove(offsetX, offsetY - 1)) {
         targetOffsetY = Math.max(mapOffsetY - tileSize, 0);
         moving = true;
+      } else {
+        collision = true;
       }
       break;
     case "ArrowRight":
       if (isValidMove(offsetX + 1, offsetY)) {
         targetOffsetX = Math.min(mapOffsetX + tileSize, (map[0].length - visibleWidth) * tileSize);
         moving = true;
+      } else {
+        collision = true;
       }
       break;
     case "ArrowDown":
       if (isValidMove(offsetX, offsetY + 1)) {
         targetOffsetY = Math.min(mapOffsetY + tileSize, (map.length - visibleHeight) * tileSize);
         moving = true;
+      } else {
+        collision = true;
       }
       break;
     case "ArrowLeft":
       if (isValidMove(offsetX - 1, offsetY)) {
         targetOffsetX = Math.max(mapOffsetX - tileSize, 0);
         moving = true;
+      } else {
+        collision = true;
       }
       break;
+  }
+
+  if (collision) {
+    playBumpSound();
   }
 }
 
