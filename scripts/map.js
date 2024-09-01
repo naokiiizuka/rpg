@@ -41,27 +41,27 @@ export const blockedTiles = [0, 1, 2];
 
 // Draw the map on the canvas
 export function drawMap(ctx, tileSize, offsetX, offsetY) {
-  for (let y = offsetY; y < offsetY + 15; y++) {
-    for (let x = offsetX; x < offsetX + 15; x++) {
-      const tileType = map[y][x];
+  const startX = Math.floor(offsetX);
+  const startY = Math.floor(offsetY);
+  const endX = Math.floor(tileSize);
+  const endY = Math.floor(tileSize);
 
-      // Calculate the tile's X coordinate on the tile sheet
-      const tileX = tileType % 8;
-      // Calculate the tile's Y coordinate on the tile sheet
-      const tileY = Math.floor(tileType / 8);
-
-      // Draw the tile at the correct position on the canvas
-      ctx.drawImage(
-        tileImage, // Tile image object
-        tileX * tileSize, // X coordinate on the tile sheet
-        tileY * tileSize, // Y coordinate on the tile sheet
-        tileSize, // Width of the tile
-        tileSize, // Height of the tile
-        (x - offsetX) * tileSize, // X coordinate on the canvas
-        (y - offsetY) * tileSize, // Y coordinate on the canvas
-        tileSize, // Width of the tile on the canvas
-        tileSize // Height of the tile on the canvas
-      );
+  for (let y = startY; y < endY; y++) {
+    for (let x = startX; x < endX; x++) {
+      if (y >= 0 && y < map.length && x >= 0 && x < map[y].length) {
+        // Draw the tile at the correct position on the canvas
+        ctx.drawImage(
+          tileImage, // Tile image object
+          map[y][x] * tileSize, // X coordinate on the tile sheet
+          0, // Y coordinate on the tile sheet
+          tileSize, // Width of the tile
+          tileSize, // Height of the tile
+          (x - offsetX) * tileSize, // X coordinate on the canvas
+          (y - offsetY) * tileSize, // Y coordinate on the canvas
+          tileSize, // Width of the tile on the canvas
+          tileSize // Height of the tile on the canvas
+        );
+      }
     }
   }
 }

@@ -15,89 +15,84 @@ const visibleHeight = 15;
 canvas.width = visibleWidth * tileSize;
 canvas.height = visibleHeight * tileSize;
 
-let mapOffsetX = 8;
-let mapOffsetY = 8;
+let mapOffsetX = 8 * tileSize;
+let mapOffsetY = 8 * tileSize;
+let targetOffsetX = mapOffsetX;
+let targetOffsetY = mapOffsetY;
+
+let moving = false;
+let moveSpeed = 1; // Move 1px at a time
 
 tileImage.onload = () => gameLoop();
 
 function gameLoop() {
   drawScene();
+  updatePosition(); // Smooth movement update
   requestAnimationFrame(gameLoop);
 }
 
 function drawScene() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawMap(ctx, tileSize, mapOffsetX, mapOffsetY);
-  drawItems(ctx, tileSize, mapOffsetX, mapOffsetY);
-  drawNPCs(ctx, tileSize, mapOffsetX, mapOffsetY);
+  drawMap(ctx, tileSize, mapOffsetX / tileSize, mapOffsetY / tileSize);
+  drawItems(ctx, tileSize, mapOffsetX / tileSize, mapOffsetY / tileSize);
+  drawNPCs(ctx, tileSize, mapOffsetX / tileSize, mapOffsetY / tileSize);
   drawPlayer(ctx, tileSize, 8, 8);
 }
 
-let moveInterval; // Timer to handle keypress intervals
-let moveDelay = 200; // Delay between moves in milliseconds
-let lastKeyPressed = null; // Track the last key pressed for consistent movement
-
 document.addEventListener("keydown", handleKeyPress);
-document.addEventListener("keyup", stopMovement);
 
 function handleKeyPress(event) {
-  if (lastKeyPressed === event.key) return; // Prevent repeating the same key
-  lastKeyPressed = event.key;
+  if (moving) return; // Prevent new movement while already moving
 
-  if (moveInterval) clearInterval(moveInterval); // Clear any existing interval
-  moveMap(event); // First movement on keydown
-
-  // Set up a continuous movement with the specified delay
-  moveInterval = setInterval(() => moveMap(event), moveDelay);
-}
-
-function stopMovement(event) {
-  if (event.key === lastKeyPressed) {
-    clearInterval(moveInterval); // Stop movement when key is released
-    lastKeyPressed = null; // Reset the key tracking
-  }
-}
-
-function moveMap(event) {
   const { x: playerX, y: playerY } = player;
-  const offsetX = playerX - 8 + mapOffsetX;
-  const offsetY = playerY - 8 + mapOffsetY;
+  const offsetX = playerX - 8 + mapOffsetX / tileSize;
+  const offsetY = playerY - 8 + mapOffsetY / tileSize;
 
   switch (event.key) {
     case "ArrowUp":
-      if (mapOffsetY > 0 && isValidMove(offsetX, offsetY - 1)) mapOffsetY--;
+      if (isValidMove(offsetX, offsetY - 1)) {
+        targetOffsetY = Math.max(mapOffsetY - tileSize, 0);
+        moving = true;
+      }
       break;
     case "ArrowRight":
-      if (mapOffsetX < 16 && isValidMove(offsetX + 1, offsetY)) mapOffsetX++;
+      if (isValidMove(offsetX + 1, offsetY)) {
+        targetOffsetX = Math.min(mapOffsetX + tileSize, (map[0].length - visibleWidth) * tileSize);
+        moving = true;
+      }
       break;
     case "ArrowDown":
-      if (mapOffsetY < 16 && isValidMove(offsetX, offsetY + 1)) mapOffsetY++;
+      if (isValidMove(offsetX, offsetY + 1)) {
+        targetOffsetY = Math.min(mapOffsetY + tileSize, (map.length - visibleHeight) * tileSize);
+        moving = true;
+      }
       break;
     case "ArrowLeft":
-      if (mapOffsetX > 0 && isValidMove(offsetX - 1, offsetY)) mapOffsetX--;
+      if (isValidMove(offsetX - 1, offsetY)) {
+        targetOffsetX = Math.max(mapOffsetX - tileSize, 0);
+        moving = true;
+      }
       break;
+  }
+}
+
+function updatePosition() {
+  if (moving) {
+    if (mapOffsetX < targetOffsetX) mapOffsetX += moveSpeed;
+    if (mapOffsetX > targetOffsetX) mapOffsetX -= moveSpeed;
+    if (mapOffsetY < targetOffsetY) mapOffsetY += moveSpeed;
+    if (mapOffsetY > targetOffsetY) mapOffsetY -= moveSpeed;
+
+    // Stop movement when reaching the target position
+    if (Math.abs(mapOffsetX - targetOffsetX) < moveSpeed && Math.abs(mapOffsetY - targetOffsetY) < moveSpeed) {
+      mapOffsetX = targetOffsetX;
+      mapOffsetY = targetOffsetY;
+      moving = false;
+      console.log("Movement stopped. Redrawing map at:", mapOffsetX, mapOffsetY);
+    }
   }
 }
 
 function isValidMove(x, y) {
-  return !blockedTiles.includes(map[y][x]) && !isBlockedNPC(x, y) && !isBlockedItem(x, y);
-}
-
-function logSurroundingTiles() {
-  const { x: playerX, y: playerY } = player;
-  const tilePositions = [
-    { x: playerX + mapOffsetX - 8, y: playerY + mapOffsetY - 8 },
-    { x: playerX + mapOffsetX - 8, y: playerY + mapOffsetY - 9 },
-    { x: playerX + mapOffsetX - 7, y: playerY + mapOffsetY - 8 },
-    { x: playerX + mapOffsetX - 8, y: playerY + mapOffsetY - 7 },
-    { x: playerX + mapOffsetX - 9, y: playerY + mapOffsetY - 8 },
-  ];
-
-  tilePositions.forEach(({ x, y }) => {
-    if (x >= 0 && x < map[0].length && y >= 0 && y < map.length) {
-      console.log(`Tile (${x}, ${y}): ${map[y][x]}`);
-    } else {
-      console.log(`Tile (${x}, ${y}): Out of bounds`);
-    }
-  });
+  return x >= 0 && x < map[0].length && y >= 0 && y < map.length && !blockedTiles.includes(map[y][x]) && !isBlockedNPC(x, y) && !isBlockedItem(x, y);
 }
