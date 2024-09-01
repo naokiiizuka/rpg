@@ -4,10 +4,21 @@ import { drawNPCs, isBlockedNPC } from "./npc.js";
 import { drawItems, isBlockedItem } from "./item.js";
 import { map } from "./map.js";
 import { tileImage } from "./image.js";
-import { playBumpSound } from "./sound.js";
+import { playBumpSound, playCastle, stopCastle } from "./sound.js";
 
+const startScreen = document.getElementById("startScreen");
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+canvas.style.display = "none";
+
+startScreen.addEventListener("click", startGame);
+
+function startGame() {
+  startScreen.style.display = "none"; // Hide the start screen
+  canvas.style.display = "block"; // Display the canvas
+  playCastle(); // Play the BGM
+  gameLoop(); // Start the game
+}
 
 const tileSize = 32;
 const visibleWidth = 15;
